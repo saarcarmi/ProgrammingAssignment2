@@ -25,7 +25,7 @@
 ##        cacheableMatrix$get ()
 
 
-## Function gets a standard R matrix and returns a list of methods to operate the CacheableMatrix (i.e. store values, 
+## Function gets a standard R matrix, which is invertible, and returns a list of methods to operate the CacheableMatrix (i.e. store values, 
 ## get solution ). See documetion above for usage information.
 makeCacheMatrix <- function(x = matrix()) {
      #cache NULL as the solution by default
@@ -34,10 +34,10 @@ makeCacheMatrix <- function(x = matrix()) {
      set <- function(y) {
           #Store the matrix in the parent environment for caching
           x <<- y
-          #Remove previous solution from caching
+          #Remove previous solution from cache
           solution <<- NULL
      }
-     get <- function() x ##return the internal cached matrix
+     get <- function() x ##return the internal cached R matrix
      
      setSolution <- function(sol) solution <<- sol  #store solution in cache. To be used by cacheSolve function 
      
@@ -68,7 +68,7 @@ cacheSolve <- function(x, ...) {
      data <- x$get()
      sol <- solve(data, ...)
      
-     ##Storee the solution for future use and return it
+     ##Store the solution for future use and return it
      x$setSolution(sol)
      sol
 }
